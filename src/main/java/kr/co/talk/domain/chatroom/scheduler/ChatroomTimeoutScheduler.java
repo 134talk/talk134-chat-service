@@ -1,13 +1,14 @@
 package kr.co.talk.domain.chatroom.scheduler;
 
-import java.util.List;
-import java.util.Map;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 import kr.co.talk.domain.chatroom.dto.ChatroomNoticeDto;
 import kr.co.talk.global.service.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+import java.util.Map;
 
 /**
  * chatroom의 timeout을 걸고, 대화 마감을 해주기 위한 scheduler
@@ -18,16 +19,16 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatroomTimeoutScheduler {
     private final RedisService redisService;
 
-    private static final long NOTICE_5MINUTE = 1000 * 60 * 5;
+    private static final long NOTICE_5MINUTE = Duration.ofMinutes(5).toMillis();
 
     @Scheduled(fixedRate = 3000)
     public void scheduleNoticeTask() {
-        log.debug("fixed rate task - {}", System.currentTimeMillis() / 1000);
+//        log.debug("fixed rate task - {}", System.currentTimeMillis() / 1000);
 
         // 채팅방 timeout check
         Map<String, ChatroomNoticeDto> chatroomNoticeEntry = redisService.getChatroomNoticeEntry();
 
-        log.info("현재 시간 :: " + System.currentTimeMillis());
+//        log.info("현재 시간 :: " + System.currentTimeMillis());
 
         chatroomNoticeEntry.entrySet().forEach(entry -> {
             String roomId = entry.getKey();
