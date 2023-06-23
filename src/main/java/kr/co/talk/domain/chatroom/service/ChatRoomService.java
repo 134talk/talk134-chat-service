@@ -185,22 +185,12 @@ public class ChatRoomService {
 	 */
 	@Transactional
 	public void saveFeedbackToRedis(long userId, FeedbackDto feedbackDto, Map<String, Object> entry) {
-		RequestDto.UserStatusDto userStausDto = userClient.getUserStaus(userId);
-
 		FeedbackDto feedback = (FeedbackDto) entry.get(String.valueOf(userId));
 
 		feedback.setStatusEnergy(feedbackDto.getStatusEnergy());
 		feedback.setStatusRelation(feedbackDto.getStatusRelation());
 		feedback.setStatusStress(feedbackDto.getStatusStress());
 		feedback.setStatusStable(feedbackDto.getStatusStable());
-
-		// before setting
-		if (userStausDto.isToday()) {
-			feedback.setStatusEnergyBefore(userStausDto.getStatusEnergy());
-			feedback.setStatusRelationBefore(userStausDto.getStatusRelation());
-			feedback.setStatusStressBefore(userStausDto.getStatusStress());
-			feedback.setStatusStableBefore(userStausDto.getStatusStable());
-		}
 
 		redisService.pushMap(RedisConstants.FEEDBACK_ + feedback.getRoomId(), String.valueOf(feedback.getUserId()),
 				feedback);
