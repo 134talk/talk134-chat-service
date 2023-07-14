@@ -48,7 +48,7 @@ public class ChatRoomServiceTest {
     public void createChatroom() {
         // given
         String teamCode = "teamCode_test";
-        String chatroomName = "석홍, 용현, 해솔";
+        String chatroomName = "석홍, 용현, 아리";
 
         long createUserId = 1L;
         List<Long> userList = List.of(1L, 2L, 3L);
