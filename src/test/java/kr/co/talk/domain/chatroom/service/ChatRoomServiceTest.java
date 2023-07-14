@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 import kr.co.talk.domain.chatroomusers.entity.ChatroomUsers;
 import kr.co.talk.global.client.UserClient;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles(profiles = "test")
-@EmbeddedKafka(partitions = 1, brokerProperties = { "listeners=PLAINTEXT://localhost:9092", "port=9092" })
+@EmbeddedKafka(partitions = 1,
+        brokerProperties = {"listeners=PLAINTEXT://localhost:9092", "port=9092"})
 public class ChatRoomServiceTest {
     @Autowired
     private ChatRoomService chatRoomService;
@@ -41,9 +43,9 @@ public class ChatRoomServiceTest {
     @MockBean
     UserClient userClient;
 
-    
+
     @Test
-    @DisplayName("채팅방 잘 만들어지는지 확인")
+    @DisplayName("[Service] 채팅방 잘 만들어지는지 확인")
     @Transactional
     public void createChatroom() {
         // given
@@ -84,49 +86,54 @@ public class ChatRoomServiceTest {
 
     }
 
-    // @Test
-    // @Transactional
-    // @Rollback(false)
-    // @DisplayName("대화방 목록 조회 api")
-    // public void findChatRoomsTest() {
-    // // given
-    // long userId = 2L;
-    // String teamCode = "teamCode_test";
-    //
-    // // redis에 이모티콘 저장
-    // RoomEmoticon roomEmoticon1 =
-    // RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP1).fromUserId(user1)
-    // .toUserId(user2).roomId(1L).build();
-    //
-    // RoomEmoticon roomEmoticon2 =
-    // RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP1).fromUserId(user1)
-    // .toUserId(user3).roomId(1L).build();
-    //
-    // RoomEmoticon roomEmoticon3 =
-    // RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP2).fromUserId(user2)
-    // .toUserId(user3).roomId(1L).build();
-    //
-    // RoomEmoticon roomEmoticon4 =
-    // RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP2).fromUserId(user1)
-    // .toUserId(user1).roomId(3424L).build();
-    //
-    // RoomEmoticon roomEmoticon5 =
-    // RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP4).fromUserId(user2)
-    // .toUserId(user3).roomId(1L).build();
-    //
-    // redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon1);
-    // redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon2);
-    // redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon3);
-    // redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon4);
-    // redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon5);
-    //
-    // // when
-    // // List<ChatroomListDto> findChatRooms = chatRoomService.findChatRooms(userId, teamCode);
-    //
-    // // log.info("findChatRooms::::::" + findChatRooms);
-    // // // then
-    // // assertEquals(findChatRooms.get(0).getEmoticons().size(), 3);
-    // // assertTrue(findChatRooms.get(0).isJoinFlag());
-    // }
+    @Test
+    @Transactional
+    @DisplayName("[Service] 대화방 목록 조회")
+    public void findChatRoomsTest() {
+        // given
+        long userId = 2L;
+        String teamCode = "teamCode_test";
+        
+        FindChatroomResponseDto findChatroomResponseDto = new FindChatroomResponseDto();
+        
+        // when
+//        when(userClient.findChatroomInfo(userId)).thenReturn(null)
+        
+
+        // redis에 이모티콘 저장
+//        RoomEmoticon roomEmoticon1 =
+//                RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP1).fromUserId(user1)
+//                        .toUserId(user2).roomId(1L).build();
+//
+//        RoomEmoticon roomEmoticon2 =
+//                RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP1).fromUserId(user1)
+//                        .toUserId(user3).roomId(1L).build();
+//
+//        RoomEmoticon roomEmoticon3 =
+//                RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP2).fromUserId(user2)
+//                        .toUserId(user3).roomId(1L).build();
+//
+//        RoomEmoticon roomEmoticon4 =
+//                RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP2).fromUserId(user1)
+//                        .toUserId(user1).roomId(3424L).build();
+//
+//        RoomEmoticon roomEmoticon5 =
+//                RoomEmoticon.builder().emoticonCode(EmoticonCode.EMOTICON_TP4).fromUserId(user2)
+//                        .toUserId(user3).roomId(1L).build();
+//
+//        redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon1);
+//        redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon2);
+//        redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon3);
+//        redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon4);
+//        redisService.pushList(1L + RedisConstants.ROOM_EMOTICON, roomEmoticon5);
+
+        // when
+        // List<ChatroomListDto> findChatRooms = chatRoomService.findChatRooms(userId, teamCode);
+
+        // log.info("findChatRooms::::::" + findChatRooms);
+        // // then
+        // assertEquals(findChatRooms.get(0).getEmoticons().size(), 3);
+        // assertTrue(findChatRooms.get(0).isJoinFlag());
+    }
 
 }
